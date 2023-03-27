@@ -70,7 +70,7 @@ export const Dropdown = <Item,>({
           {current ? (
             <Render item={current} />
           ) : (
-            <p className="text-sm text-gray-500">Select</p>
+            <p className="text-sm text-gray-500">Segfsgflect</p>
           )}
         </div>
         <div className="self-stretch border-r my-3" />
