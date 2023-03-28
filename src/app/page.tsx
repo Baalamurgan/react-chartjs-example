@@ -160,7 +160,7 @@ export default function Home() {
         <div className="ml-10">
           <Button
             color="green"
-            className="text-black bg-green-600 hover:scale-125 transform transition duration-500 ease-in-out"
+            className="text-black bg-green-600 hover:shadow-lime-700 hover:shadow-xl hover:scale-125 transform transition duration-500 ease-in-out"
             onClick={handleReportCreation}
           >
             Create report

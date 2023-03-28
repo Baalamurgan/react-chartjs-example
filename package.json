@@ -20,6 +20,7 @@
     "@mantine/next": "^6.0.4",
     "@mantine/notifications": "^6.0.4",
     "@mantine/nprogress": "^6.0.4",
+    "@tabler/icons-react": "^2.11.0",
     "@types/node": "18.15.10",
     "@types/react": "18.0.29",
     "@types/react-dom": "18.0.11",
