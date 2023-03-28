@@ -1,42 +1,38 @@
 "use client";
-import { useEffect, useState } from "react";
-import "react-toastify/dist/ReactToastify.css";
-import "./globals.css";
+import { Collapsible } from "@/component/Collapsible";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
-  Navbar,
-  Group,
-  Code,
-  ScrollArea,
-  createStyles,
-  rem,
+  Center,
   ChevronIcon,
+  Code,
+  Group,
+  Navbar,
+  ScrollArea,
+  Stack,
+  Tooltip,
+  UnstyledButton,
 } from "@mantine/core";
 import {
-  IconNotes,
   IconCalendarStats,
+  IconChartInfographic,
+  IconDeviceDesktopAnalytics,
+  IconFingerprint,
   IconGauge,
   IconHome,
   IconHome2,
-  IconPresentationAnalytics,
-  IconFileAnalytics,
-  IconAdjustments,
-  IconLock,
-  TablerIconsProps,
-  IconChartInfographic,
-  IconTrendingUp,
+  IconLogout,
   IconReportAnalytics,
-  IconStack2,
   IconSettings,
-  IconSettings2,
-  IconMenu2,
+  IconStack2,
+  IconSwitchHorizontal,
+  IconTrendingUp,
+  IconUser,
+  TablerIconsProps,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import {
-  ChevronRightIcon,
-  XCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { Collapsible } from "@/component/Collapsible";
+import { FC, useEffect, useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 // import { UserButton } from '../UserButton/UserButton';
 // import { LinksGroup } from '../NavbarLinksGroup/NavbarLinksGroup';
 // import { Logo } from './Logo';
@@ -129,20 +125,74 @@ export default function RootLayout({
     },
   ];
 
-  const [navbarOpen, setNavbarOpen] = useState(true);
+  const [navbarOpen, setNavbarOpen] = useState(false);
+  const collapsedMockData = [
+    { icon: IconHome2, label: "Home" },
+    { icon: IconGauge, label: "Dashboard" },
+    { icon: IconDeviceDesktopAnalytics, label: "Analytics" },
+    { icon: IconCalendarStats, label: "Releases" },
+    { icon: IconUser, label: "Account" },
+    { icon: IconFingerprint, label: "Security" },
+    { icon: IconSettings, label: "Settings" },
+  ];
+  const [active, setActive] = useState(2);
+  const links = collapsedMockData.map((link, index) => (
+    <CollpasedNavbarLink
+      {...link}
+      key={link.label}
+      active={index === active}
+      onClick={() => setActive(index)}
+    />
+  ));
   return (
     <html lang="en">
       <body>
         {!navbarOpen && (
-          <IconMenu2
-            className="h-10 w-10 cursor-pointer"
-            onClick={() => setNavbarOpen((p) => !p)}
-          />
+          <Navbar
+            height={"100vh"}
+            width={{ base: 70 }}
+            p="md"
+            className="fixed top-0 left-[-1px] z-50"
+            sx={(theme) => ({
+              backgroundColor: theme.fn.variant({
+                variant: "filled",
+                color: theme.primaryColor,
+              }).background,
+            })}
+          >
+            <Center>
+              <Image
+                onClick={() => setNavbarOpen((p) => !p)}
+                className="cursor-pointer"
+                unoptimized
+                priority
+                src="/logo.png"
+                alt="logo"
+                width={20}
+                height={20}
+              />
+            </Center>
+            <Navbar.Section grow mt={50}>
+              <Stack justify="center" spacing={0}>
+                {links}
+              </Stack>
+            </Navbar.Section>
+            <Navbar.Section>
+              <Stack justify="center" spacing={0}>
+                <CollpasedNavbarLink
+                  icon={IconSwitchHorizontal}
+                  label="Change account"
+                />
+                <CollpasedNavbarLink icon={IconLogout} label="Logout" />
+              </Stack>
+            </Navbar.Section>
+          </Navbar>
         )}
         <Navbar
+          height={"100vh"}
           p="md"
-          className={`bg-black pb-0 px-0 absolute left-0 top-0 transition-all duration-300 ease-in-out
-          ${navbarOpen ? "!w-64" : "!w-0"}
+          className={`bg-black pb-0 px-0 fixed top-0 -left-1 z-50 transition-all duration-300 ease-in-out
+          ${navbarOpen ? "!w-80" : "!w-0"}
           `}
         >
           <Navbar.Section
@@ -151,7 +201,7 @@ export default function RootLayout({
             }`}
           >
             <Group position="apart">
-              <div className="flex items-center">
+              <div className="flex items-center justify-between w-full">
                 <Image
                   unoptimized
                   priority
@@ -176,14 +226,6 @@ export default function RootLayout({
               ))}
             </div>
           </Navbar.Section>
-
-          {/* <Navbar.Section className={classes.footer}>
-            <UserButton
-              image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
-              name="Ann Nullpointer"
-              email="anullpointer@yahoo.com"
-            />
-          </Navbar.Section> */}
         </Navbar>
         {toast && <toast.ToastContainer />}
         {children}
@@ -191,6 +233,28 @@ export default function RootLayout({
     </html>
   );
 }
+
+interface NavbarLinkProps {
+  icon: FC<any>;
+  label: string;
+  active?: boolean;
+  onClick?(): void;
+}
+
+const CollpasedNavbarLink = ({
+  icon: Icon,
+  label,
+  active,
+  onClick,
+}: NavbarLinkProps) => {
+  return (
+    <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
+      <UnstyledButton onClick={onClick} className="my-2">
+        <Icon size="1.8rem" stroke={1.5} />
+      </UnstyledButton>
+    </Tooltip>
+  );
+};
 
 const NavbarLink = ({
   index,

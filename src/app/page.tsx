@@ -1,93 +1,93 @@
-'use client';
-import { Button, MultiSelect, Select } from '@mantine/core';
-import { Inter } from 'next/font/google';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import styles from './page.module.css';
+"use client";
+import { Button, MultiSelect, Select } from "@mantine/core";
+import { Inter } from "next/font/google";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import styles from "./page.module.css";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const converterOptions = [
     {
-      value: 'S3',
-      label: 'S3',
+      value: "S3",
+      label: "S3",
     },
     {
-      value: 'S5',
-      label: 'S5',
+      value: "S5",
+      label: "S5",
     },
     {
-      value: 'S8',
-      label: 'S8',
+      value: "S8",
+      label: "S8",
     },
     {
-      value: 'S9',
-      label: 'S9',
+      value: "S9",
+      label: "S9",
     },
   ];
   const meterOptions = [
     {
-      value: '19 MW TG',
-      label: '19 MW TG',
+      value: "19 MW TG",
+      label: "19 MW TG",
     },
     {
-      label: 'HT-Panel-3',
-      value: 'HT-Panel-3',
+      label: "HT-Panel-3",
+      value: "HT-Panel-3",
     },
   ];
   const parameterOptions = [
     {
-      label: 'V-R',
-      value: 'V-R',
+      label: "V-R",
+      value: "V-R",
     },
     {
-      label: 'V-Y',
-      value: 'V-Y',
+      label: "V-Y",
+      value: "V-Y",
     },
     {
-      label: 'V-B',
-      value: 'V-B',
+      label: "V-B",
+      value: "V-B",
     },
     {
-      label: 'F',
-      value: 'F',
+      label: "F",
+      value: "F",
     },
     {
-      label: 'V-RY',
-      value: 'V-RY',
+      label: "V-RY",
+      value: "V-RY",
     },
     {
-      label: 'V-YB',
-      value: 'V-YB',
+      label: "V-YB",
+      value: "V-YB",
     },
     {
-      label: 'V-BR',
-      value: 'V-BR',
+      label: "V-BR",
+      value: "V-BR",
     },
     {
-      label: 'I-R',
-      value: 'I-R',
+      label: "I-R",
+      value: "I-R",
     },
     {
-      label: 'I-Y',
-      value: 'I-Y',
+      label: "I-Y",
+      value: "I-Y",
     },
     {
-      label: 'I-B',
-      value: 'I-B',
+      label: "I-B",
+      value: "I-B",
     },
     {
-      label: 'KW-R',
-      value: 'KW-R',
+      label: "KW-R",
+      value: "KW-R",
     },
     {
-      label: 'KW-Y',
-      value: 'KW-Y',
+      label: "KW-Y",
+      value: "KW-Y",
     },
     {
-      label: 'KW-B',
-      value: 'KW-B',
+      label: "KW-B",
+      value: "KW-B",
     },
   ];
   const [selectedConverter, setSelectedConverter] = useState<string | null>(
@@ -106,18 +106,18 @@ export default function Home() {
       (selectedMeters && selectedMeters.length === 0) ||
       (selectedParameters && selectedParameters.length === 0)
     ) {
-      toast.error('Please choose all the options');
+      toast.error("Please choose all the options");
       return;
     } else {
       toast.promise(
-        new Promise(resolve => {
+        new Promise((resolve) => {
           setTimeout(() => {
-            resolve('asd');
+            resolve("asd");
           }, 2000);
         }),
         {
           // loading: 'Creating report...',
-          success: 'Report created successfully',
+          success: "Report created successfully",
         }
       );
     }
@@ -125,11 +125,11 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className="flex flex-col md:flex-row items-end md:gap-x-5">
+      <div className="flex flex-col md:flex-row md:items-end md:gap-x-5">
         <Select
           mt="md"
           withinPortal
-          data={converterOptions.map(i => i.label)}
+          data={converterOptions.map((i) => i.label)}
           placeholder="Select a converter"
           label="Converter :"
           nothingFound="No converter found"
@@ -139,7 +139,7 @@ export default function Home() {
         <MultiSelect
           mt="md"
           withinPortal
-          data={meterOptions.map(i => i.label)}
+          data={meterOptions.map((i) => i.label)}
           placeholder="Select a meter"
           label="Meters :"
           classNames={{}}
@@ -150,14 +150,14 @@ export default function Home() {
           mt="md"
           withinPortal
           multiple
-          data={parameterOptions.map(i => i.label)}
+          data={parameterOptions.map((i) => i.label)}
           placeholder="Select parameters"
           label="Parameters :"
           classNames={{}}
           nothingFound="No parameters found"
           onChange={setSelectedParameters}
         />
-        <div className="ml-10">
+        <div className="mt-3 md:mt-0 md:ml-10">
           <Button
             color="green"
             className="text-black bg-green-600 hover:shadow-lime-700 hover:shadow-xl hover:scale-125 transform transition duration-500 ease-in-out"
@@ -172,7 +172,7 @@ export default function Home() {
           Converter - <span className="text-lime-500">{selectedConverter}</span>
         </p>
         <p>
-          Meters -{' '}
+          Meters -{" "}
           {selectedMeters &&
             selectedMeters.length > 0 &&
             selectedMeters.map((meter, index) => (
@@ -180,16 +180,16 @@ export default function Home() {
                 {meter}
                 <span
                   className={`${
-                    index + 1 !== selectedMeters.length ? 'inline' : 'hidden'
+                    index + 1 !== selectedMeters.length ? "inline" : "hidden"
                   }`}
                 >
-                  ,{' '}
+                  ,{" "}
                 </span>
               </span>
             ))}
         </p>
         <p>
-          Parameters -{' '}
+          Parameters -{" "}
           {selectedParameters &&
             selectedParameters.length > 0 &&
             selectedParameters.map((parameter, index) => (
@@ -198,11 +198,11 @@ export default function Home() {
                 <span
                   className={`${
                     index + 1 !== selectedParameters.length
-                      ? 'inline'
-                      : 'hidden'
+                      ? "inline"
+                      : "hidden"
                   }`}
                 >
-                  ,{' '}
+                  ,{" "}
                 </span>
               </span>
             ))}
